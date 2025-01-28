@@ -1,0 +1,6 @@
+@CacheStampedeProtection_HostAddress = http://localhost:5278
+
+GET {{CacheStampedeProtection_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
