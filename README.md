@@ -41,11 +41,12 @@ HybridCache is Microsoft's new caching library (currently in preview) that provi
 ### Hybrid Cache Results ⭐
 - Maximum Users: 1000 VUs
 - Test Duration: 6 seconds
-- Success Rate: 100% (2125 requests)
-- Average Request Duration: 279.51ms
-- Maximum Request Duration: 3.25s
-- Total Iterations: 2125
-- Best Performance Among All Options!
+- Success Rate: 100% (1763 requests)
+- Average Request Duration: 1.52s
+- Maximum Request Duration: 3.01s
+- P90/P95: 3.01s
+- Total Iterations: 1763
+- Throughput: ~219 requests/second
 
 ### Fusion Cache Results
 - Maximum Users: 1000 VUs
@@ -70,20 +71,21 @@ Each caching strategy is tested with:
 ## 📝 Key Findings
 
 1. **Hybrid Cache Performance**: 
-   - Best overall performance
-   - Lowest average request duration (279.51ms)
-   - Highest number of successful iterations (2125)
+   - Consistent performance under high load
+   - Average request duration of 1.52s
+   - Highest number of successful iterations (1763)
+   - Good throughput at ~219 requests/second
 
 2. **Memory Cache Performance**:
    - Moderate performance
-   - Higher average request duration (1.45s)
+   - Lower average request duration (1.45s)
    - Exceeded performance thresholds
 
 3. **Fusion Cache Performance**:
-   - Similar to Memory Cache
+   - Similar to Hybrid Cache
    - Built-in stampede protection
    - Exceeded performance thresholds
-   - Good for scenarios requiring stampede protection
+   - Good for most scenarios especially when requiring stampede protection
 
 ## 🚦 API Endpoints
 
