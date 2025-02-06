@@ -24,7 +24,7 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        'results/memory-cache-summary.txt': textSummary(data, { indent: ' ', enableColors: false }),
+        'K6-LoadTest/results/memory-cache-summary.txt': textSummary(data, { indent: ' ', enableColors: false }),
         stdout: textSummary(data, { indent: ' ', enableColors: true }),
     };
 }

@@ -49,16 +49,16 @@ var summaries = new[]
 app.MapGet("/memory-cache", async () =>
     {
         var memoryCache = app.Services.GetService<IMemoryCache>();
-        
-        if(memoryCache == null) return Results.NotFound();
-        
+
+        if (memoryCache == null) return Results.NotFound();
+
         var cachedValue = await memoryCache.GetOrCreateAsync("memory-cache", async (entry) =>
         {
             await Task.Delay(3000);
             Console.WriteLine("Getting data from the database");
             return "Data from the database";
         }, new MemoryCacheEntryOptions() { SlidingExpiration = TimeSpan.FromSeconds(1) });
-        
+
         return Results.Ok(cachedValue);
     })
     .WithName("MemoryCache");
@@ -67,19 +67,19 @@ app.MapGet("/memory-cache", async () =>
 // Summary of performance test results for Hybrid Cache:
 // - 1 scenario with a maximum of 1000 virtual users (VUs) over 6 seconds.
 // - All requests returned a status of 200 (success).
-// - 100.00% of checks passed (2125 out of 2125).
-// - Data received: 389 kB at an average rate of 62 kB/s.
-// - Data sent: 196 kB at an average rate of 31 kB/s.
-// - Average request duration: 279.51ms, with a maximum of 3.25s.
+// - 100.00% of checks passed (1763 out of 1763).
+// - Data received: 323 kB at an average rate of 40 kB/s.
+// - Data sent: 162 kB at an average rate of 20 kB/s.
+// - Average request duration: 1.52s, with a maximum of 3.01s.
 // - No failed requests (0.00% failure rate).
-// - Average iteration duration: 1.28s, with a maximum of 4.26s.
-// - 2125 iterations completed with a maximum of 1000 VUs.
-// - Note: Performance is better than memory cache, with lower average request duration.
+// - Average iteration duration: 2.52s, with a maximum of 4.02s.
+// - 1763 iterations completed with a maximum of 965 VUs.
+// - Warning: thresholds for 'http_req_duration' were exceeded. (p(95)=3.01s)
 app.MapGet("/hybrid-cache", async () =>
     {
         var hybridCache = app.Services.GetService<HybridCache>();
-        
-        if(hybridCache == null) return Results.NotFound();
+
+        if (hybridCache == null) return Results.NotFound();
 
         var cachedValue = await hybridCache.GetOrCreateAsync("hybrid-cache", async (entry) =>
         {
@@ -88,9 +88,9 @@ app.MapGet("/hybrid-cache", async () =>
             return "Data from the database";
         }, new HybridCacheEntryOptions
         {
-            Expiration = TimeSpan.FromSeconds(1),
+            LocalCacheExpiration = TimeSpan.FromSeconds(1)
         });
-        
+
         return Results.Ok(cachedValue);
     })
     .WithName("HybridCache");
@@ -111,8 +111,8 @@ app.MapGet("/hybrid-cache", async () =>
 app.MapGet("/fusion-cache", async () =>
     {
         var fusionCache = app.Services.GetService<IFusionCache>();
-        
-        if(fusionCache == null) return Results.NotFound();
+
+        if (fusionCache == null) return Results.NotFound();
 
         var cachedValue = await fusionCache.GetOrSetAsync("fusion-cache", async (entry) =>
         {
@@ -120,7 +120,7 @@ app.MapGet("/fusion-cache", async () =>
             Console.WriteLine("Getting data from the database");
             return "Data from the database";
         }, TimeSpan.FromSeconds(1));
-        
+
         return Results.Ok(cachedValue);
     })
     .WithName("FusionCache");

@@ -23,7 +23,7 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        'results/hybrid-cache-summary.txt': textSummary(data, { indent: ' ', enableColors: false }),
+        'K6-LoadTest/results/hybrid-cache-summary.txt': textSummary(data, { indent: ' ', enableColors: false }),
         stdout: textSummary(data, { indent: ' ', enableColors: true }),
     };
 }
